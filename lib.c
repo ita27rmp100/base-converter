@@ -13,8 +13,16 @@ int hex_to_dec(char hex[]){
     int p ;
     int dec = 0;
     int digit = 0;
+     int is_negative = 0;
+    int len;
+     if (hex[0] == '-'){
+        is_negative = 1;
+        // Move the pointer to skip the '-' sign
+        hex++;
+        len--;  
+    }
+
     for(i=strlen(hex)-1;i>=0;i--){
-        printf("i= %i ---- %c \n",i,hex[i]);
         if (hex[i] >= '0' && hex[i] <= '9') {
             digit = hex[i] - '0'; // Convert '9'-'0' to 9-10
         } else if (hex[i] >= 'A' && hex[i] <= 'F') {
@@ -26,8 +34,12 @@ int hex_to_dec(char hex[]){
         dec += digit*p;
         y++;
     }
+        if (is_negative) {
+        dec = -dec;}
+
     return dec ;
 }
+
 
 int hex_to_BinOrOct(char hex[],int baseDestination){
     int toDec = hex_to_dec(hex);
@@ -52,7 +64,7 @@ int bin_or_oct_ToDec(int oob,int base){
         if(oob%10 < base){
             dec += oob%10 * p ;
             oob = (int)oob/10;
-            i++;
+            i++; 
         }
         else{
             printf("Error , digits of number must be less then %i",base);
@@ -94,7 +106,6 @@ int decTo_bin_or_oct(int dec,int base){
             p = p * 10;
             dec = (int)dec/base;
         }
-        printf("B = %i \n",b);
     }
     return b;
 }
